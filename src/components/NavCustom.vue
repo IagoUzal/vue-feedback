@@ -45,7 +45,7 @@ export default {
 }
 
 .nav_container {
-  max-width: 80%;
+  max-width: 1200px;
   margin: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;

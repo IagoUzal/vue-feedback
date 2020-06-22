@@ -5,6 +5,9 @@
         <div class="titulo">
           <h1>{{ titulo }}</h1>
           <p>{{ descripcion }}</p>
+          <router-link class="button_primary" :to="{ name: 'Login' }"
+            >Ir al muro</router-link
+          >
         </div>
         <div class="img">
           <lottie-player
@@ -37,6 +40,10 @@ export default {
   color: #fff;
 }
 
+.hero h1 {
+  color: #fff;
+}
+
 .hero_content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -51,6 +58,7 @@ export default {
 .titulo p {
   font-size: 1.4rem;
   font-weight: 300;
+  color: #f0f0f0;
 }
 
 .img {
