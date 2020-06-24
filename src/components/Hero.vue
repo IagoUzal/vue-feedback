@@ -5,8 +5,10 @@
         <div class="titulo">
           <h1>{{ titulo }}</h1>
           <p>{{ descripcion }}</p>
-          <router-link class="button_primary" :to="{ name: 'Login' }"
-            >Ir al muro</router-link
+          <router-link
+            class="button_primary button_large"
+            :to="{ name: 'Feedback' }"
+            >Ir al feddback</router-link
           >
         </div>
         <div class="img">
@@ -64,5 +66,9 @@ export default {
 .img {
   display: grid;
   justify-content: left;
+}
+
+.button_primary {
+  margin-top: 1rem;
 }
 </style>

@@ -47,6 +47,12 @@ button {
   background: #e43f5a;
   padding: 0.25rem 1.2rem;
   border-radius: 4px;
+  width: fit-content;
+  text-decoration: none;
+}
+
+.button_large {
+  padding: 0.5rem 1.5rem;
 }
 
 .button_text {

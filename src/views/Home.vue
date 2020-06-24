@@ -4,7 +4,6 @@
       title="Feedback Project"
       description="Proyecto final frontend con Vue Hack A Boss"
     />
-    <navcustom></navcustom>
     <main>
       <hero :titulo="titulo" :descripcion="descripcion"></hero>
       <section class="wraper">
@@ -21,7 +20,6 @@
 
 <script>
 import api from "@/api/api.js";
-import navcustom from "@/components/NavCustom.vue";
 import hero from "@/components/Hero.vue";
 import buttonusers from "@/components/ButtonUsers.vue";
 import listMessages from "@/components/ListMessages.vue";
@@ -29,7 +27,6 @@ import listMessages from "@/components/ListMessages.vue";
 export default {
   name: "Home",
   components: {
-    navcustom,
     hero,
     buttonusers,
     listMessages,
@@ -39,16 +36,22 @@ export default {
       titulo: "¿Tienes algo que decir?",
       descripcion:
         "Una colección de agradecimientos y referencias de las personas con las que compartes tu día día",
+      allUsers: [],
       users: [],
+      allMessages: [],
       messages: [],
     };
   },
   created() {
+    // Solo los últimos 5 usuarios registrados mostramos en la Landin
     api.getUsers().then((res) => {
-      this.users = res.data.data;
+      this.allUsers = res.data.data;
+      this.users = this.allUsers.slice(this.allUsers.length - 5);
     });
+    // Solo los últimos 6 mensajes publicados
     api.getMessages().then((res) => {
-      this.messages = res.data.data;
+      this.allMessages = res.data.data;
+      this.messages = this.allMessages.slice(this.allUsers.length - 6);
     });
   },
 };
