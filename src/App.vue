@@ -1,7 +1,21 @@
 <template>
   <div id="app">
+    <navCustom></navCustom>
     <router-view />
+    <footerCustom></footerCustom>
   </div>
 </template>
 
-<style></style>
+<script>
+import navCustom from "@/components/NavCustom.vue";
+import footerCustom from "@/components/FooterCustom.vue";
+
+export default {
+  components: {
+    footerCustom,
+    navCustom,
+  },
+};
+</script>
+
+<style scoped></style>
