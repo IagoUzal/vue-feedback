@@ -1,14 +1,12 @@
 import axios from "axios";
 
-const URL_BASE = "http://localhost:3001";
-const GET_MESSAGES = "/messages";
-const GET_USERS = "/users";
+const ENDPOINT = "http://localhost:3001";
 
 // ======= Get usuarios Anonimos ======
 
 async function getUsers() {
   try {
-    return await axios.get(`${URL_BASE}${GET_USERS}`);
+    return await axios.get(`${ENDPOINT}/users`);
   } catch (error) {
     console.log(error);
   }
@@ -16,11 +14,13 @@ async function getUsers() {
 
 async function getMessages() {
   try {
-    return await axios.get(`${URL_BASE}${GET_MESSAGES}`);
+    return await axios.get(`${ENDPOINT}/messages`);
   } catch (error) {
     console.log(error);
   }
 }
+
+// ====== Login ======
 
 export default {
   getUsers,
