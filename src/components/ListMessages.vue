@@ -1,30 +1,32 @@
 <template>
-  <div>
-    <article>
-      <ul>
-        <li v-for="message in messages" :key="message.id">
-          <div class="card_image">
-            <img class="avatar" :src="message.avatar_to" :alt="message.Para" />
+  <article>
+    <ul>
+      <li v-for="message in messages" :key="message.id">
+        <div class="card_image">
+          <img class="avatar" :src="message.avatar_to" :alt="message.Para" />
+        </div>
+        <div class="container_card">
+          <div class="card_header">
+            <h3>{{ message.Para }}</h3>
+            <p>Escrito por: {{ message.De }}</p>
           </div>
-          <div class="container_card">
-            <div class="card_header">
-              <h3>{{ message.Para }}</h3>
-              <p>Escrito por: {{ message.De }}</p>
-            </div>
-            <div class="card_body">
-              <h3>{{ message.title }}</h3>
-              <p>{{ message.text }}</p>
-              <img :src="message.image" :alt="message.titulo" />
-            </div>
-            <div class="card_footer">
-              <p>{{ message.category }}</p>
-              <p>{{ message.type }}</p>
-            </div>
+          <div class="card_body">
+            <h3>{{ message.title }}</h3>
+            <p>{{ message.text }}</p>
+            <img
+              :src="message.image"
+              :alt="message.titulo"
+              :class="{ sinImagen: message.image === 'sin imagen' }"
+            />
           </div>
-        </li>
-      </ul>
-    </article>
-  </div>
+          <div class="card_footer">
+            <p>{{ message.category }}</p>
+            <p>{{ message.type }}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </article>
 </template>
 
 <script>
@@ -88,5 +90,9 @@ li {
 
 h3 {
   font-weight: 600;
+}
+
+.sinImagen {
+  display: none;
 }
 </style>
