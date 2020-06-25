@@ -102,11 +102,9 @@ export default {
   methods: {
     sumaMessages() {
       this.totalMessages = this.messages.length;
-      console.log(this.totalMessages);
     },
     sumaUsers() {
       this.totalUsers = this.users.length;
-      console.log(this.totalUsers);
     },
   },
   created() {
