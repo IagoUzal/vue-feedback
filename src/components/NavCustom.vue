@@ -8,12 +8,30 @@
           >
         </div>
         <div class="nav_right">
-          <router-link class="button_primary" :to="{ name: 'Login' }"
+          <router-link
+            class="button_primary"
+            :to="{ name: 'Login' }"
+            v-show="logged === false"
             >Login</router-link
           >
-          <router-link class="button_text" :to="{ name: 'Register' }"
+          <router-link
+            class="button_text"
+            :to="{ name: 'Register' }"
+            v-show="logged === false"
             >Registro</router-link
           >
+          <router-link
+            :to="{ name: 'MyProfile', params: { id: this.userID } }"
+            v-show="logged === true"
+            >Mi Perfil</router-link
+          >
+          <button
+            class="button_primary"
+            @click="logoutUser()"
+            v-show="logged === true"
+          >
+            Cerrar sesión
+          </button>
         </div>
       </div>
     </nav>
@@ -21,8 +39,43 @@
 </template>
 
 <script>
+// Importando funciones de cerrar sesión y si esta autenticado
+import { clearLogin, isLoggedIn } from "@/api/utils.js";
+
 export default {
   name: "navcustom",
+  data() {
+    return {
+      userName: "",
+      userID: 0,
+      logged: false,
+    };
+  },
+  methods: {
+    logoutUser() {
+      this.userName = "";
+      this.userID = 0;
+      this.logged = false;
+      this.$router.push("/login");
+      return clearLogin();
+    },
+    getUserName() {
+      this.userName = localStorage.getItem("Usuario");
+      if (localStorage.getItem("userID")) {
+        this.userID = localStorage.getItem("userID");
+      } else {
+        this.userID = 0;
+      }
+    },
+  },
+  created() {
+    this.getUserName();
+    if (isLoggedIn()) {
+      this.logged = true;
+    } else {
+      this.logged = false;
+    }
+  },
 };
 </script>
 
