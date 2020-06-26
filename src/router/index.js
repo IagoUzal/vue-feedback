@@ -5,6 +5,14 @@ import { isLoggedIn } from "../api/utils";
 
 Vue.use(VueRouter);
 
+import axios from "axios";
+
+// Enviar el token en el header para el back, si no está aquí cada vez que se recarga la página se pierde
+// console.log(localStorage.getItem("authtoken"));
+axios.defaults.headers.common["Authorization"] = localStorage.getItem(
+  "authtoken"
+);
+
 const routes = [
   {
     path: "/",
