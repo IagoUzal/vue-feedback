@@ -40,7 +40,9 @@
           <button class="button_primary" @click="editFeedback(index)">
             Actualizar
           </button>
-          <button class="button_primary">Borrar</button>
+          <button class="button_primary" @click="deleteFeedback(index)">
+            Borrar
+          </button>
         </li>
       </ul>
     </section>
@@ -53,7 +55,6 @@
     - actualizar password
 
   - TODO:
-    - edit messages escritos
     - delete messages escritos
     - maquetación
 */
@@ -115,12 +116,10 @@ export default {
       }
       if (this.surname !== null) {
         dataEditProfile.append("surname", this.surname);
-      } else {
-        console.log("no hacer nada");
       }
-      if (this.email !== null) {
-        dataEditProfile.append("email", this.email);
-      }
+      // if (this.email !== null) {
+      //   dataEditProfile.append("email", this.email);
+      // }
       if (this.location !== null) {
         dataEditProfile.append("location", this.location);
       }
@@ -220,7 +219,23 @@ export default {
           });
       }
     },
-    deleteFeedback() {},
+    deleteFeedback(index) {
+      let self = this;
+      let dataDelete = this.feedbackSend[index].id;
+      axios
+        .delete(`http://localhost:3001/messages/${dataDelete}`)
+        .then(function(response) {
+          alert("Mensaje borrado correctamente");
+          setTimeout(function() {
+            location.reload();
+          }, 1500);
+        })
+        .catch(function(error) {
+          if (error.response) {
+            alert(error.response.data.message);
+          }
+        });
+    },
   },
   created() {
     this.getProfile();
