@@ -22,8 +22,10 @@ export function loginUser(email, password) {
 
       resolve();
     } catch (err) {
+      // Si hay error en el back lo guardo en localStorage
       if (err.response) {
-        alert(err.response.data.message);
+        localStorage.setItem("errorBack", err.response.data.message);
+        console.log(err.response.data.message);
       }
 
       console.log("Error en Login", err);
@@ -38,6 +40,8 @@ export function clearLogin() {
   localStorage.removeItem(AUTH_TOKEN_KEY);
   localStorage.removeItem("Usuario");
   localStorage.removeItem("userID");
+  localStorage.removeItem("avatar");
+  localStorage.clear();
   clearAdmin();
 }
 
@@ -48,6 +52,7 @@ export function setAuthToken(token, payload) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   localStorage.setItem(AUTH_TOKEN_KEY, token);
   localStorage.setItem("userID", payload.id);
+  localStorage.setItem("avatar", payload.avatar);
 }
 
 // Coger Token
