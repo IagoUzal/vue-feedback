@@ -11,24 +11,24 @@
           <router-link
             class="button_primary"
             :to="{ name: 'Login' }"
-            v-show="logged === false"
+            v-if="!logged"
             >Login</router-link
           >
           <router-link
             class="button_text"
             :to="{ name: 'Register' }"
-            v-show="logged === false"
+            v-if="!logged"
             >Registro</router-link
           >
           <img
             :src="avatar.includes('uifaces') ? avatar : path + avatar"
             :alt="userName"
             class="img_login"
-            v-show="logged === true"
+            v-if="logged"
           />
           <router-link
             :to="{ name: 'MyProfile', params: { id: this.userID } }"
-            v-show="logged === true"
+            v-if="logged"
             >Mi Perfil</router-link
           >
           <button
