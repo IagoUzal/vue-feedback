@@ -20,6 +20,12 @@
             v-show="logged === false"
             >Registro</router-link
           >
+          <img
+            :src="avatar.includes('uifaces') ? avatar : path + avatar"
+            :alt="userName"
+            class="img_login"
+            v-show="logged === true"
+          />
           <router-link
             :to="{ name: 'MyProfile', params: { id: this.userID } }"
             v-show="logged === true"
@@ -48,7 +54,9 @@ export default {
     return {
       userName: "",
       userID: 0,
+      avatar: "uifaces",
       logged: false,
+      path: "http://localhost:3001/uploads/",
     };
   },
   methods: {
@@ -61,6 +69,7 @@ export default {
     },
     getUserName() {
       this.userName = localStorage.getItem("Usuario");
+      this.avatar = localStorage.getItem("avatar");
       if (localStorage.getItem("userID")) {
         this.userID = localStorage.getItem("userID");
       } else {
@@ -106,14 +115,21 @@ export default {
 
 .nav_right {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
   justify-content: end;
   align-content: center;
-  align-items: baseline;
+  align-items: center;
+  gap: 1rem;
 }
 
 .logo {
   font-weight: 900 !important;
   font-size: 1.5rem;
+}
+
+.img_login {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
 }
 </style>
