@@ -20,12 +20,6 @@ const routes = [
     component: Home,
   },
   {
-    path: "/about",
-    name: "About",
-    component: () => import("../views/About.vue"),
-  },
-
-  {
     path: "/feedback",
     name: "Feedback",
     component: () => import("../views/Feedback.vue"),
@@ -34,11 +28,36 @@ const routes = [
     path: "/login",
     name: "Login",
     component: () => import("../views/Login.vue"),
+    // beforeEnter: (to, from, next) => {
+    //   if (isLoggedIn() === true) {
+    //     alert("Ya estas logeado");
+    //     next({
+    //       path: "/",
+    //       query: { redirect: to.fullpath },
+    //     });
+    //   }
+    // },
   },
   {
     path: "/register",
     name: "Register",
     component: () => import("../views/Register.vue"),
+  },
+  {
+    path: "/wall/:id",
+    name: "Wall",
+    component: () => import("../views/Wall.vue"),
+    meta: {
+      // Ruta Privada
+      allowAnonymous: false,
+    },
+    beforeEnter: (to, from, next) => {
+      if (!to.meta.allowAnonymous && !isLoggedIn()) {
+        alert("Tienes que estar registrado o hacer Login");
+      } else {
+        next();
+      }
+    },
   },
   {
     path: "/myprofile/:id",
@@ -49,9 +68,8 @@ const routes = [
       allowAnonymous: false,
     },
     beforeEnter: (to, from, next) => {
-      // Si la ruta es privada y el usuario no tiene token
       if (!to.meta.allowAnonymous && !isLoggedIn()) {
-        alert("Ohh no tienes permisos");
+        alert("Tienes que estar registrado o hacer Login");
       } else {
         next();
       }
