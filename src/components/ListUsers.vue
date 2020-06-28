@@ -2,7 +2,12 @@
   <article>
     <ul>
       <li v-for="user in users" :key="user.id">
-        <img :src="user.avatar" :alt="user.name" />
+        <img
+          :src="
+            user.avatar.includes('uifaces') ? user.avatar : path + user.avatar
+          "
+          :alt="user.name"
+        />
         <h3>
           {{ user.name }} <span class="surname"> {{ user.surname }} </span>
         </h3>
@@ -18,6 +23,11 @@ export default {
   name: "listUsers",
   props: {
     users: Array,
+  },
+  data() {
+    return {
+      path: "http://localhost:3001/uploads/",
+    };
   },
 };
 </script>
