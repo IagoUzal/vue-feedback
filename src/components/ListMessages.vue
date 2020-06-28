@@ -3,7 +3,15 @@
     <ul>
       <li v-for="message in messages" :key="message.id">
         <div class="card_image">
-          <img class="avatar" :src="message.avatar_to" :alt="message.Para" />
+          <img
+            class="avatar"
+            :src="
+              message.avatar_to.includes('uifaces')
+                ? message.avatar_to
+                : path + message.avatar_to
+            "
+            :alt="message.Para"
+          />
         </div>
         <div class="container_card">
           <div class="card_header">
@@ -34,6 +42,11 @@ export default {
   name: "listMessages",
   props: {
     messages: Array,
+  },
+  data() {
+    return {
+      path: "http://localhost:3001/uploads/",
+    };
   },
 };
 </script>
