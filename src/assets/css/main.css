@@ -36,6 +36,13 @@ p {
   margin: auto;
 }
 
+.error_message {
+  color: #e43f5a;
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-bottom: 0.8rem;
+}
+
 /*  BUTTON  */
 
 button {
@@ -59,4 +66,5 @@ button {
 .button_text {
   color: #e43f5a !important;
   padding: 0.25rem 1.2rem;
+  text-decoration: none;
 }
