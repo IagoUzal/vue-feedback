@@ -21,7 +21,7 @@
             >Registro</router-link
           >
           <img
-            :src="avatar.includes('uifaces') ? avatar : path + avatar"
+            :src="path + avatar"
             :alt="userName"
             class="img_login"
             v-if="logged"
