@@ -22,9 +22,14 @@
             <h3>{{ message.title }}</h3>
             <p>{{ message.text }}</p>
             <img
-              :src="message.image"
+              :src="
+                message.image === 'sin imagen'
+                  ? message.image
+                  : path + message.image
+              "
               :alt="message.titulo"
               :class="{ sinImagen: message.image === 'sin imagen' }"
+              class="img_feedback"
             />
           </div>
           <div class="card_footer">
@@ -56,12 +61,6 @@ ul {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
-}
-
-.avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
 }
 
 li {
