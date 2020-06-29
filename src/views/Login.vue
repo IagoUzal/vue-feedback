@@ -99,7 +99,7 @@ export default {
       try {
         await loginUser(this.email, this.password);
         localStorage.setItem("Usuario", this.email);
-        this.$router.push("/feedback");
+        this.$router.push("/");
         location.reload();
       } catch (error) {
         this.message = localStorage.getItem(errorBack);
