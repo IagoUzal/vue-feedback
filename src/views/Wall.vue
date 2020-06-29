@@ -4,7 +4,7 @@
       <section class="perfil">
         <section class="user_info">
           <h2>Perfil de {{ user.name }} 🤗</h2>
-          <img class="avatar" :src="user.avatar" :alt="user.name" />
+          <img class="avatar" :src="path + user.avatar" :alt="user.name" />
           <ul>
             <li>Nombre: {{ user.name }}</li>
             <li>Apellidos: {{ user.surname }}</li>
@@ -79,8 +79,24 @@
                   />
                 </div>
                 <div class="card_footer">
-                  <p>{{ message.category }}</p>
-                  <p>{{ message.type }}</p>
+                  <p>
+                    <span
+                      class="label"
+                      :class="{
+                        profesional: message.category === 'Profesional',
+                        personal: message.category === 'Personal',
+                      }"
+                      >{{ message.category }}</span
+                    >
+                    <span
+                      class="label"
+                      :class="{
+                        agradecimiento: message.type === 'Agradecimiento',
+                        referencia: message.type === 'Referencia',
+                      }"
+                      >{{ message.type }}</span
+                    >
+                  </p>
                 </div>
               </div>
             </li>
@@ -214,11 +230,6 @@ h2 {
   display: none;
 }
 
-.label {
-  background: #162447;
-  color: #fff;
-}
-
 .user_info li {
   border-bottom: 1px solid #505050;
   padding: 0.5rem 0;
@@ -240,9 +251,37 @@ h2 {
 .feedback_recibido ul li {
   background: #fff;
   padding: 2rem;
+  border-radius: 6px;
 }
 
 .img_feedback {
   width: 100%;
+}
+
+.card_header {
+  margin-bottom: 1rem;
+}
+
+.card_header h3 {
+  margin-bottom: 0.25rem;
+}
+
+.card_header p {
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.card_body {
+  margin-bottom: 1rem;
+}
+
+.card_body img {
+  margin: 0.8rem 0;
+}
+
+.card_footer {
+  border-top: 1px solid #f0f0f0;
+  margin-bottom: 0.5rem;
+  padding-top: 0.8rem;
 }
 </style>
