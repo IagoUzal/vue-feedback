@@ -2,15 +2,7 @@
   <main class="profile container">
     <section class="profile">
       <h3>Tus datos de perfil</h3>
-      <img
-        class="avatar"
-        :src="
-          profile.avatar.includes('uifaces')
-            ? profile.avatar
-            : path + profile.avatar
-        "
-        :alt="profile.name"
-      />
+      <img class="avatar" :src="path + profile.avatar" :alt="profile.name" />
       <input type="file" id="file" ref="file" @change="onFileChanged" />
       <br />
       <input type="text" v-model="name" :placeholder="profile.name" />
@@ -27,14 +19,22 @@
       <h3>Feedback enviado</h3>
       <ul>
         <li v-for="(feedback, index) in feedbackSend" :key="feedback.id">
-          <img class="avatar" :src="feedback.avatar_to" :alt="feedback.Para" />
+          <img
+            class="avatar"
+            :src="path + feedback.avatar_to"
+            :alt="feedback.Para"
+          />
           <p class="error_message" v-show="required">{{ messageError }}</p>
           <p>{{ feedback.Para }}</p>
           <input type="text" v-model="feedback.title" />
           <br />
           <textarea rows="4" cols="30" v-model="feedback.text" />
           <br />
-          <img :src="feedback.image" :alt="feedback.title" />
+          <img
+            :src="path + feedback.image"
+            :alt="feedback.title"
+            class="img_feedback"
+          />
           <p>{{ feedback.category }}</p>
           <p>{{ feedback.type }}</p>
           <button class="button_primary" @click="editFeedback(index)">
