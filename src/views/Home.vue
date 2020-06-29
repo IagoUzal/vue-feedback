@@ -1,68 +1,210 @@
 <template>
-  <div class="home">
+  <main>
     <vue-headful
-      title="Feedback Project"
-      description="Proyecto final frontend con Vue Hack A Boss"
+      title="Feedback - Feedback Project"
+      description="Página de Feedback"
     />
-    <main>
-      <hero :titulo="titulo" :descripcion="descripcion"></hero>
-      <section class="wraper">
-        <div class="container">
-          <h2>😀 Últimos usuarios registrados</h2>
-          <buttonusers :users="users"></buttonusers>
-          <h2>💬 Últimos mensajes publicados</h2>
-          <listMessages :messages="messages"></listMessages>
+    <section class="feedback container">
+      <section class="destacado">
+        <div class="imagen">
+          <lottie-player
+            src="https://assets8.lottiefiles.com/packages/lf20_MeTWrj.json"
+            background="transparent"
+            speed="1"
+            style="width: 200px; height: 200px;"
+            autoplay
+            loop
+          ></lottie-player>
+        </div>
+        <div class="description">
+          <p>
+            Una colección de agradecimientos y referencias de las personas con
+            las que compartes tu día día
+          </p>
+        </div>
+        <div class="total_messages">
+          <p>
+            {{ totalMessages }} <br />
+            mensajes escritos
+          </p>
+        </div>
+        <div class="total_users">
+          <p>{{ totalUsers }} <br />usuarios registrados</p>
         </div>
       </section>
-    </main>
-  </div>
+      <input
+        v-model="search"
+        id="search"
+        type="search"
+        name="search"
+        placeholder="Busca por usuario, tipo, categoria o localidad..."
+      />
+      <section class="anonimousData">
+        <section class="messages">
+          <h3>Últimos Mensajes publicados 💬</h3>
+          <listMessages
+            :messages="filteredMessages"
+            v-show="seeAll"
+          ></listMessages>
+        </section>
+        <section class="users">
+          <h3>Usuarios registrados 🙋🏻‍♂️</h3>
+          <listUsers :users="filteredUsers"></listUsers>
+        </section>
+      </section>
+    </section>
+  </main>
 </template>
 
 <script>
 import api from "@/api/api.js";
-import hero from "@/components/Hero.vue";
-import buttonusers from "@/components/ButtonUsers.vue";
 import listMessages from "@/components/ListMessages.vue";
-
+import listUsers from "@/components/ListUsers.vue";
 export default {
   name: "Home",
   components: {
-    hero,
-    buttonusers,
     listMessages,
+    listUsers,
   },
   data() {
     return {
-      titulo: "¿Tienes algo que decir?",
-      descripcion:
-        "Una colección de agradecimientos y referencias de las personas con las que compartes tu día día",
-      allUsers: [],
-      users: [],
-      allMessages: [],
       messages: [],
+      users: [],
+      search: "",
+      seeAll: true,
+      totalMessages: null,
+      totalUsers: null,
     };
   },
+  computed: {
+    filteredMessages() {
+      if (!this.search) {
+        return this.messages;
+      }
+      return this.messages.filter(
+        (message) =>
+          message.Para.toLowerCase().includes(this.search.toLowerCase()) ||
+          message.type.toLowerCase().includes(this.search.toLowerCase()) ||
+          message.category.toLowerCase().includes(this.search.toLowerCase())
+      );
+    },
+    filteredUsers() {
+      if (!this.search) {
+        return this.users;
+      }
+      return this.users.filter(
+        (user) =>
+          user.name.toLowerCase().includes(this.search.toLowerCase()) ||
+          user.location.toLowerCase().includes(this.search.toLowerCase())
+      );
+    },
+  },
+  methods: {
+    sumaMessages() {
+      this.totalMessages = this.messages.length;
+    },
+    sumaUsers() {
+      this.totalUsers = this.users.length;
+    },
+  },
   created() {
-    // Solo los últimos 5 usuarios registrados mostramos en la Landin
-    api.getUsers().then((res) => {
-      this.allUsers = res.data.data;
-      this.users = this.allUsers.slice(this.allUsers.length - 5);
-    });
-    // Solo los últimos 6 mensajes publicados
+    // Todos los mensajes
     api.getMessages().then((res) => {
-      this.allMessages = res.data.data;
-      this.messages = this.allMessages.slice(this.allUsers.length - 6);
+      this.messages = res.data.data;
+      this.sumaMessages();
+    });
+    // Todos los usuarios
+    api.getUsers().then((res) => {
+      this.users = res.data.data;
+      this.sumaUsers();
     });
   },
 };
 </script>
 
 <style scoped>
-.wraper {
-  margin: 4rem 0;
+.feedback {
+  margin: 2rem auto;
 }
 
-h2 {
-  margin: 2rem 0;
+.destacado {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.imagen {
+  background: #162447;
+  border-radius: 6px;
+  padding: 1rem;
+  height: 100%;
+}
+
+.description {
+  background: #fff;
+  border-radius: 6px;
+  padding: 2rem;
+  height: 100%;
+  display: grid;
+  align-items: center;
+}
+
+.description p {
+  color: #162447;
+  font-weight: 300;
+  font-size: 1.4rem;
+}
+
+.total_messages {
+  background: #e43f5a;
+  border-radius: 6px;
+  padding: 2rem;
+  font-size: 2rem;
+  height: 100%;
+  display: grid;
+  align-items: center;
+}
+
+.total_messages p {
+  color: #fff;
+}
+
+.total_users {
+  background: #162447;
+  color: #fff;
+  border-radius: 6px;
+  padding: 2rem;
+  font-size: 2rem;
+  height: 100%;
+  display: grid;
+  align-items: center;
+}
+
+.total_users p {
+  color: #fff;
+}
+
+input {
+  background: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 1rem;
+  font-size: 1rem;
+  color: #161617;
+  width: 100%;
+  font-style: italic;
+}
+
+.anonimousData {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}
+
+h3 {
+  margin-bottom: 2rem;
 }
 </style>
