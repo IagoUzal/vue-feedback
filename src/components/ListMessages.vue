@@ -22,19 +22,31 @@
             <h3>{{ message.title }}</h3>
             <p>{{ message.text }}</p>
             <img
-              :src="
-                message.image === 'sin imagen'
-                  ? message.image
-                  : path + message.image
-              "
+              :src="path + message.image"
               :alt="message.titulo"
               :class="{ sinImagen: message.image === 'sin imagen' }"
               class="img_feedback"
             />
           </div>
           <div class="card_footer">
-            <p>{{ message.category }}</p>
-            <p>{{ message.type }}</p>
+            <p>
+              <span
+                class="label"
+                :class="{
+                  profesional: message.category === 'Profesional',
+                  personal: message.category === 'Personal',
+                }"
+                >{{ message.category }}</span
+              >
+              <span
+                class="label"
+                :class="{
+                  agradecimiento: message.type === 'Agradecimiento',
+                  referencia: message.type === 'Referencia',
+                }"
+                >{{ message.type }}</span
+              >
+            </p>
           </div>
         </div>
       </li>
