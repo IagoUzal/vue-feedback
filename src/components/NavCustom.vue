@@ -131,5 +131,7 @@ export default {
   width: 30px;
   height: 30px;
   border-radius: 100%;
+  border: 2px solid #505050;
+  padding: 2px;
 }
 </style>
