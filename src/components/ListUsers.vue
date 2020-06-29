@@ -3,6 +3,7 @@
     <ul>
       <li v-for="user in users" :key="user.id">
         <img
+          class="avatar"
           :src="
             user.avatar.includes('uifaces') ? user.avatar : path + user.avatar
           "
@@ -12,7 +13,9 @@
           {{ user.name }} <span class="surname"> {{ user.surname }} </span>
         </h3>
         <p>{{ user.location }}</p>
-        <p>Enviar mensaje</p>
+        <router-link :to="{ name: 'Wall', params: { id: user.id } }"
+          >Enviar feedback</router-link
+        >
       </li>
     </ul>
   </article>
@@ -33,12 +36,6 @@ export default {
 </script>
 
 <style scoped>
-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
-}
-
 ul {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
