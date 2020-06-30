@@ -56,7 +56,7 @@ li {
   border-radius: 6px;
   align-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 0 0 1rem;
 }
 
 .card_header {
