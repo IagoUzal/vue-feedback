@@ -44,7 +44,7 @@
             Login
           </button>
           <router-link class="button_text" :to="{ name: 'Register' }"
-            >Registro</router-link
+            >Ir a registro</router-link
           >
         </form>
       </section>
