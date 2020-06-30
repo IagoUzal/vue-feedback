@@ -3,7 +3,7 @@
     <article class="container">
       <section class="perfil">
         <section class="user_info">
-          <h2>Perfil de {{ user.name }} 🤗</h2>
+          <h3>Perfil de {{ user.name }} 🤗</h3>
           <img class="avatar" :src="path + user.avatar" :alt="user.name" />
           <ul>
             <li>Nombre: {{ user.name }}</li>
@@ -14,7 +14,7 @@
       </section>
       <section class="wall_feedback">
         <section class="send_feedback">
-          <h2>Enviar feedback a {{ user.name }} 💬</h2>
+          <h3>Enviar feedback a {{ user.name }} 💬</h3>
           <div class="form">
             <label for="title">Titulo</label>
             <br />
@@ -57,7 +57,7 @@
           </div>
         </section>
         <section class="feedback_recibido">
-          <h2>Último feedback recibido por {{ user.name }} 👇</h2>
+          <h3>Último feedback recibido por {{ user.name }} 👇</h3>
           <ul>
             <li v-for="message in messages" :key="message.id">
               <div class="container_card">
@@ -216,7 +216,7 @@ export default {
 .wall {
   margin: 2rem 0;
 }
-h2 {
+h3 {
   margin-bottom: 2rem;
 }
 
@@ -240,6 +240,10 @@ h2 {
   background: #fff;
   padding: 2rem;
   border-radius: 6px;
+}
+
+.send_feedback {
+  margin-bottom: 2rem;
 }
 
 .feedback_recibido ul {
