@@ -23,10 +23,6 @@ export default {
 </script>
 
 <style scoped>
-footer {
-  background: #fff;
-}
-
 .container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
