@@ -1,12 +1,21 @@
 <template>
-  <main class="container">
+  <main class="container container_register">
     <vue-headful
       title="Registro - Feedback Project"
       description="Página de Registro"
     />
     <section class="register_card">
-      <section class="img_card"></section>
+      <section class="img_card">
+        <img src="../assets/image/register.gif" alt="" />
+      </section>
       <section class="form_card">
+        <h1>
+          Hola 🤗
+        </h1>
+        <p>
+          Rellena todos los datos <br />
+          para pertenecer a la comunidad
+        </p>
         <label for="name">Nombre</label>
         <br />
         <input type="text" id="name" v-model="name" />
@@ -24,12 +33,17 @@
         <input type="password" id="password" v-model="password" />
         <br />
         <label for="location">Selecciona tu Comunidad</label>
+        <br />
         <input type="text" id="location" v-model="location" />
+        <br />
         <label for="avatar">Selecciona tu imagen de perfil</label>
         <br />
         <input type="file" id="file" ref="file" @change="onFileChanged" />
         <br />
-        <button class="button_primary" @click="newUser()">Registro</button>
+        <button class="button_primary" @click="newUser()">Registrar</button>
+        <router-link class="button_text" :to="{ name: 'Login' }"
+          >Ir a login</router-link
+        >
       </section>
     </section>
   </main>
@@ -83,4 +97,31 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.register_card {
+  background: #fff;
+  border-radius: 6px;
+  margin: 4rem 0;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2rem;
+  align-items: center;
+  justify-items: center;
+}
+
+.form_card h1 {
+  margin-bottom: 0.2rem;
+}
+
+.form_card p {
+  font-style: italic;
+  font-size: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.img_card img {
+  max-width: 400px;
+  max-height: 400px;
+}
+</style>
