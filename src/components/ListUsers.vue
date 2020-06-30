@@ -2,20 +2,28 @@
   <article>
     <ul>
       <li v-for="user in users" :key="user.id">
-        <img
-          class="avatar"
-          :src="
-            user.avatar.includes('uifaces') ? user.avatar : path + user.avatar
-          "
-          :alt="user.name"
-        />
-        <h3>
-          {{ user.name }} <span class="surname"> {{ user.surname }} </span>
-        </h3>
-        <p>{{ user.location }}</p>
-        <router-link :to="{ name: 'Wall', params: { id: user.id } }"
-          >Enviar feedback</router-link
+        <router-link
+          class="card_link"
+          :to="{ name: 'Wall', params: { id: user.id } }"
         >
+          <section class="card_header">
+            <img
+              class="avatar"
+              :src="
+                user.avatar.includes('uifaces')
+                  ? user.avatar
+                  : path + user.avatar
+              "
+              :alt="user.name"
+            />
+            <h3>
+              {{ user.name }} {{ user.surname }} <br /><span
+                class="location_text"
+                >{{ user.location }}</span
+              >
+            </h3>
+          </section>
+        </router-link>
       </li>
     </ul>
   </article>
@@ -44,14 +52,27 @@ ul {
 
 li {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: 1fr;
   background: #fff;
-  padding: 1rem;
   border-radius: 6px;
   align-content: center;
   align-items: center;
+  padding: 1rem;
+}
+
+.card_header {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
   gap: 1rem;
+}
+
+.location_text {
+  color: #505050;
+  font-weight: 300;
+  font-size: 0.8rem;
+}
+
+.card_link {
+  text-decoration: none;
 }
 
 h3 {
