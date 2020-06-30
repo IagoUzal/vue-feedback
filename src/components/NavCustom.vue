@@ -64,7 +64,7 @@ export default {
       this.userName = "";
       this.userID = 0;
       this.logged = false;
-      this.$router.push("/login");
+      this.$router.push("/");
       return clearLogin();
     },
     getUserName() {
