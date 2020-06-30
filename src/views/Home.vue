@@ -201,7 +201,7 @@ input {
   margin-top: 2rem;
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 h3 {
