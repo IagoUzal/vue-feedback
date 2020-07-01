@@ -27,8 +27,6 @@ export function loginUser(email, password) {
         localStorage.setItem("errorBack", err.response.data.message);
         console.log(err.response.data.message);
       }
-
-      console.log("Error en Login", err);
     }
   });
 }
