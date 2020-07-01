@@ -16,6 +16,7 @@
           Rellena todos los datos <br />
           para pertenecer a la comunidad
         </p>
+        <p class="error_message" v-show="required">⚠️ {{ errorMessage }}</p>
         <label for="name">Nombre</label>
         <br />
         <input type="text" id="name" v-model="name" />
@@ -62,6 +63,8 @@ export default {
       password: "",
       location: "",
       file: null,
+      errorMessage: "Error",
+      required: false,
     };
   },
   methods: {
@@ -89,7 +92,10 @@ export default {
         })
         .catch(function(error) {
           if (error.response) {
-            alert(error.response.data.message);
+            // Si hay error del Back lo guardo en locastorage y lo muestro en pantalla
+            localStorage.setItem("errorBack", error.response.data.message);
+            self.errorMessage = localStorage.getItem("errorBack");
+            self.required = true;
           }
         });
     },
