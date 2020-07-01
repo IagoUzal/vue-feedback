@@ -6,6 +6,7 @@ import { isLoggedIn } from "../api/utils";
 Vue.use(VueRouter);
 
 import axios from "axios";
+import Swal from "sweetalert2";
 
 // Enviar el token en el header para el back, si no está aquí cada vez que se recarga la página se pierde
 // console.log(localStorage.getItem("authtoken"));
@@ -23,15 +24,6 @@ const routes = [
     path: "/login",
     name: "Login",
     component: () => import("../views/Login.vue"),
-    // beforeEnter: (to, from, next) => {
-    //   if (isLoggedIn() === true) {
-    //     alert("Ya estas logeado");
-    //     next({
-    //       path: "/",
-    //       query: { redirect: to.fullpath },
-    //     });
-    //   }
-    // },
   },
   {
     path: "/register",
@@ -48,7 +40,11 @@ const routes = [
     },
     beforeEnter: (to, from, next) => {
       if (!to.meta.allowAnonymous && !isLoggedIn()) {
-        alert("Tienes que estar registrado o hacer Login");
+        Swal.fire(
+          "¿Quieres enviar un mensaje?",
+          "Tienes que estar registrado o hacer Login",
+          "warning"
+        );
       } else {
         next();
       }
