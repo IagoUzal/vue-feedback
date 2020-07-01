@@ -20,7 +20,7 @@
           Hola 🤗
         </h1>
         <form>
-          <p class="error_message" v-show="required">{{ message }}</p>
+          <p class="error_message" v-show="required">{{ errorMessage }}</p>
           <input
             type="email"
             minlength="3"
@@ -55,6 +55,7 @@
 <script>
 // import axios from "axios";
 import { loginUser } from "@/api/utils.js";
+import Swal from "sweetalert2";
 
 export default {
   name: "Login",
@@ -62,49 +63,32 @@ export default {
     return {
       email: "iagouzal@gmail.com",
       password: "HackBoss15003",
-      message: "Error",
+      errorMessage: "Error",
       required: false,
     };
   },
   methods: {
-    // async login() {
-    //   try {
-    //     if (this.email === "" || this.password === "")
-    //       throw Error("Los campos Email y Password no pueden estar vacios");
-    //     this.required = false;
-
-    //     await loginUser(this.email, this.password);
-
-    //     // Guardar email en localstorage
-    //     localStorage.setItem("Usuario", this.email);
-    //     // Enviar al feedback
-    //     this.$router.push("/feedback");
-    //     location.reload();
-    //   } catch (error) {
-    //     console.log(error);
-    //     this.message = error.message;
-    //     this.required = true;
-    //     // if (error.response) {
-    //     //   // alert(error);
-    //     // }
-    //     if (error.response) {
-    //       console.log(localStorage.getItem(errorBack));
-    //       this.message = localStorage.getItem(errorBack);
-    //       this.required = true;
-    //       localStorage.removeItem(errorBack);
-    //     }
-    //   }
-    // },
     async login() {
       try {
         await loginUser(this.email, this.password);
         localStorage.setItem("Usuario", this.email);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login Correcto",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         this.$router.push("/");
-        location.reload();
+        setTimeout(function() {
+          location.reload();
+        }, 1500);
       } catch (error) {
-        this.message = localStorage.getItem(errorBack);
-        this.required = true;
-        localStorage.removeItem(errorBack);
+        if (error.response) {
+          self.errorMessage = localStorage.getItem(errorBack);
+          console.log(self.errorMessage);
+          self.required = true;
+        }
       }
     },
   },
