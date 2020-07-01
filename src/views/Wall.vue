@@ -6,9 +6,17 @@
           <h3>Perfil de {{ user.name }} 🤗</h3>
           <img class="avatar" :src="path + user.avatar" :alt="user.name" />
           <ul>
-            <li>Nombre: {{ user.name }}</li>
-            <li>Apellidos: {{ user.surname }}</li>
-            <li>Localidad: {{ user.location }}</li>
+            <li><span class="color_black">Nombre:</span> {{ user.name }}</li>
+            <li>
+              <span class="color_black">Apellidos:</span> {{ user.surname }}
+            </li>
+            <li>
+              <span class="color_black">Localidad:</span> {{ user.location }}
+            </li>
+            <li>
+              <span class="color_black">Feedback recivido:</span>
+              <span class="span_data">{{ totalFeedback }}</span>
+            </li>
           </ul>
         </section>
       </section>
@@ -16,14 +24,10 @@
         <section class="send_feedback">
           <h3>Enviar feedback a {{ user.name }} 💬</h3>
           <div class="form">
+            <p class="error_message" v-show="required">⚠️ {{ errorMessage }}</p>
             <label for="title">Titulo</label>
             <br />
-            <input
-              type="text"
-              id="Titulo"
-              v-model="title"
-              placeholder="Titulo corto y claro"
-            />
+            <input type="text" id="Titulo" v-model="title" />
             <br />
             <label for="text">Descripción</label>
             <br />
@@ -49,6 +53,10 @@
               <option value="Referencia" selected>Referencia</option>
             </select>
             <br />
+            <label for="file"> Imagen</label>
+            <p class="label_description">
+              Selecciona una imagen para describir el feedback
+            </p>
             <input type="file" id="file" ref="file" @change="onFileChanged" />
             <br />
             <button class="button_primary" @click="sendFeedback()">
@@ -68,11 +76,7 @@
                 <div class="card_body">
                   <p>{{ message.text }}</p>
                   <img
-                    :src="
-                      message.image === 'sin imagen'
-                        ? message.image
-                        : path + message.image
-                    "
+                    :src="path + message.image"
                     :alt="message.titulo"
                     :class="{ sinImagen: message.image === 'sin imagen' }"
                     class="img_feedback"
@@ -104,12 +108,9 @@
         </section>
       </section>
       <section class="others">
-        <h2>Otros</h2>
-        <section class="others_wrapper">
-          <p class="label">
-            {{ totalFeedback }} <br />
-            Feedback recibido
-          </p>
+        <h3>Otros</h3>
+        <section class="others_img">
+          <img src="../assets/image/register.gif" alt="" />
         </section>
       </section>
     </article>
@@ -118,6 +119,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default {
   name: "Wall",
@@ -129,11 +131,13 @@ export default {
       path: "http://localhost:3001/uploads/",
       title: "",
       text: "",
-      category: "",
-      type: "",
+      category: "Profesional",
+      type: "Referencia",
       file: null,
       fileNo: "sin imagen",
       totalFeedback: 0,
+      errorMessage: "Error",
+      required: false,
     };
   },
   methods: {
@@ -187,14 +191,23 @@ export default {
       axios
         .post("http://localhost:3001/messages", dataNewFeedback)
         .then(function(response) {
-          alert("Feedback enviado correctamente");
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Feedback Enviado Correctamente",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           setTimeout(function() {
             location.reload();
-          }, 1500);
+          }, 2000);
         })
         .catch(function(error) {
           if (error.response) {
-            alert(error.response.data.message);
+            // Si hay error del Back lo guardo en locastorage y lo mestro en pantalla
+            localStorage.setItem("errorBack", error.response.data.message);
+            self.errorMessage = localStorage.getItem("errorBack");
+            self.required = true;
           }
         });
     },
@@ -287,5 +300,30 @@ h3 {
   border-top: 1px solid #f0f0f0;
   margin-bottom: 0.5rem;
   padding-top: 0.8rem;
+}
+
+.others_img {
+  border-radius: 6px;
+}
+
+.others_img img {
+  width: 100px;
+  height: 100px;
+  border-radius: 6px;
+}
+
+.span_data {
+  background: #162447;
+  padding: 0.2rem 0.5rem;
+  width: auto;
+  height: auto;
+  border-radius: 100%;
+  color: #fff;
+  margin-left: 0.5rem;
+}
+
+.color_black {
+  color: #161617;
+  font-weight: 600;
 }
 </style>
