@@ -130,9 +130,30 @@ label {
 /*  FORM  */
 
 input {
-  margin-bottom: 1rem;
+  margin: 0.5rem 0;
   border: none;
   background: #dfdfe8;
   border-radius: 6px;
   padding: 0.5rem;
+}
+
+textarea {
+  margin: 0.5rem 0;
+  border: none;
+  background: #dfdfe8;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+select {
+  margin: 0.5rem 0;
+  border: none;
+  background: #dfdfe8;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+.label_description {
+  font-size: 0.8rem;
+  font-style: italic;
 }
