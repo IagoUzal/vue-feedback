@@ -14,7 +14,7 @@
               <span class="color_black">Localidad:</span> {{ user.location }}
             </li>
             <li>
-              <span class="color_black">Feedback recivido:</span>
+              <span class="color_black">Feedback recibido:</span>
               <span class="span_data">{{ totalFeedback }}</span>
             </li>
           </ul>
