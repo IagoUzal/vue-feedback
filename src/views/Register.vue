@@ -85,7 +85,7 @@ export default {
       axios
         .post("http://localhost:3001/users", dataNewUser)
         .then(function(response) {
-          alert("Usuario registrado correctamente");
+          alert("Genial estas registrado, revisa tu email y valida tu usuario");
           setTimeout(function() {
             location.reload();
           }, 1500);
