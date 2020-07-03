@@ -64,7 +64,7 @@ export default {
       this.userName = "";
       this.userID = 0;
       this.logged = false;
-      this.$router.push("/");
+      this.$router.push("/login");
       return clearLogin();
     },
     getUserName() {
@@ -130,6 +130,7 @@ export default {
 .img_login {
   width: 30px;
   height: 30px;
+  object-fit: cover;
   border-radius: 100%;
   border: 2px solid #505050;
   padding: 2px;
