@@ -7,13 +7,21 @@
           Aquí puedes consultar tus datos de perfíl y actualizarlos
         </p>
         <section class="card_profile">
-          <img
-            class="avatar"
-            :src="path + profile.avatar"
-            :alt="profile.name"
-          />
-          <input type="file" id="file" ref="file" @change="onFileChanged" />
-          <br />
+          <section class="cambiar_avatar">
+            <img
+              class="avatar"
+              :src="path + profile.avatar"
+              :alt="profile.name"
+            />
+            <input
+              type="file"
+              class="inputfile"
+              id="file"
+              ref="file"
+              @change="onFileChanged"
+            />
+            <label for="file">Cambiar Avatar</label>
+          </section>
           <input class="input_list" type="text" v-model="profile.name" />
           <br />
           <input class="input_list" type="text" v-model="profile.surname" />
@@ -292,7 +300,7 @@ export default {
 
 .my_profile {
   display: grid;
-  grid-template-columns: 1fr 2fr 2fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
 }
 
@@ -300,15 +308,17 @@ export default {
   margin-bottom: 0.2rem;
 }
 
+.feedback_enviado {
+  grid-column: span 3;
+}
+
 .feedback_enviado ul {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
 
 .card_profile {
-  background: #fff;
-  padding: 1rem;
   border-radius: 6px;
 }
 
@@ -316,6 +326,7 @@ export default {
   background: transparent;
   border-radius: 0;
   border-bottom: 1px solid #505050;
+  width: 100%;
 }
 
 .feedback_enviado ul li {
@@ -344,6 +355,15 @@ export default {
   padding-right: 1rem;
 }
 
+.card_body input,
+textarea {
+  background: transparent;
+  font-family: Muli;
+  padding-left: 0;
+  font-size: 1rem;
+  color: #505050;
+}
+
 .button_primary {
   margin-right: 1rem;
   margin-top: 1rem;
@@ -351,5 +371,37 @@ export default {
 
 hr {
   margin-top: 1.5rem;
+}
+
+/* input[type="file"] {
+  width: 100%;
+  display: inline-block;
+} */
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile + label {
+  color: #e43f5a;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+  color: #162447;
+}
+
+.cambiar_avatar {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: center;
 }
 </style>
