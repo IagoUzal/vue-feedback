@@ -7,14 +7,7 @@
     <section class="feedback container">
       <section class="destacado">
         <div class="imagen">
-          <lottie-player
-            src="https://assets8.lottiefiles.com/packages/lf20_MeTWrj.json"
-            background="transparent"
-            speed="1"
-            style="width: 200px; height: 200px;"
-            autoplay
-            loop
-          ></lottie-player>
+          <img src="../assets/image/login.gif" alt="" />
         </div>
         <div class="description">
           <p>
@@ -136,10 +129,11 @@ export default {
 }
 
 .imagen {
-  background: #162447;
+  background: #fff;
   border-radius: 6px;
   padding: 1rem;
   height: 100%;
+  text-align: center;
 }
 
 .description {
