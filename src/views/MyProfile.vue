@@ -1,51 +1,105 @@
 <template>
   <main class="profile container">
-    <section class="profile">
-      <h3>Tus datos de perfil</h3>
-      <img class="avatar" :src="path + profile.avatar" :alt="profile.name" />
-      <input type="file" id="file" ref="file" @change="onFileChanged" />
-      <br />
-      <input type="text" v-model="name" :placeholder="profile.name" />
-      <br />
-      <input type="text" v-model="surname" :placeholder="profile.surname" />
-      <br />
-      <input type="text" v-model="email" :placeholder="profile.email" />
-      <br />
-      <input type="text" v-model="location" :placeholder="profile.location" />
-      <br />
-      <button class="button_primary" @click="editProfile()">Actualizar</button>
-    </section>
-    <section class="feedback">
-      <h3>Feedback enviado</h3>
-      <ul>
-        <li v-for="(feedback, index) in feedbackSend" :key="feedback.id">
+    <article class="my_profile">
+      <section class="profile_data">
+        <h3>Tus datos de perfil 🤗</h3>
+        <p class="description">
+          Aquí puedes consultar tus datos de perfíl y actualizarlos
+        </p>
+        <section class="card_profile">
           <img
             class="avatar"
-            :src="path + feedback.avatar_to"
-            :alt="feedback.Para"
+            :src="path + profile.avatar"
+            :alt="profile.name"
           />
-          <p class="error_message" v-show="required">{{ messageError }}</p>
-          <p>{{ feedback.Para }}</p>
-          <input type="text" v-model="feedback.title" />
+          <input type="file" id="file" ref="file" @change="onFileChanged" />
           <br />
-          <textarea rows="4" cols="30" v-model="feedback.text" />
+          <input class="input_list" type="text" v-model="profile.name" />
           <br />
-          <img
-            :src="path + feedback.image"
-            :alt="feedback.title"
-            class="img_feedback"
-          />
-          <p>{{ feedback.category }}</p>
-          <p>{{ feedback.type }}</p>
-          <button class="button_primary" @click="editFeedback(index)">
+          <input class="input_list" type="text" v-model="profile.surname" />
+          <br />
+          <input class="input_list" type="email" v-model="profile.email" />
+          <br />
+          <input class="input_list" type="text" v-model="profile.location" />
+          <br />
+          <button class="button_primary" @click="editProfile()">
             Actualizar
           </button>
-          <button class="button_primary" @click="deleteFeedback(index)">
-            Borrar
-          </button>
-        </li>
-      </ul>
-    </section>
+        </section>
+      </section>
+      <section class="feedback_enviado">
+        <h3>Feedback enviado ✍🏼</h3>
+        <p class="description">
+          Aquí puedes editar el feedback enviado o borrarlo si lo deseas
+        </p>
+        <ul>
+          <li v-for="(feedback, index) in feedbackSend" :key="feedback.id">
+            <section class="card_header">
+              <img
+                class="avatar"
+                :src="path + feedback.avatar_to"
+                :alt="feedback.Para"
+              />
+              <section class="card_name">
+                <p>Enviado a:</p>
+                <h3>{{ feedback.Para }}</h3>
+              </section>
+            </section>
+            <section class="card_body">
+              <p class="error_message" v-show="required">{{ messageError }}</p>
+              <label for="title">Editar titulo</label>
+              <br />
+              <input type="text" v-model="feedback.title" />
+              <br />
+              <label for="text">Editar Mensaje</label>
+              <br />
+              <textarea rows="4" cols="30" v-model="feedback.text" />
+              <br />
+              <img
+                :src="path + feedback.image"
+                :alt="feedback.title"
+                class="img_feedback"
+              />
+            </section>
+            <section class="card_footer">
+              <p>
+                <span
+                  class="label"
+                  :class="{
+                    profesional: feedback.category === 'Profesional',
+                    personal: feedback.category === 'Personal',
+                  }"
+                  >{{ feedback.category }}</span
+                >
+                <span
+                  class="label"
+                  :class="{
+                    agradecimiento: feedback.type === 'Agradecimiento',
+                    referencia: feedback.type === 'Referencia',
+                  }"
+                  >{{ feedback.type }}</span
+                >
+              </p>
+              <hr />
+              <button class="button_primary" @click="editFeedback(index)">
+                Actualizar
+              </button>
+              <button class="button_text" @click="deleteFeedback(index)">
+                Borrar
+              </button>
+            </section>
+          </li>
+        </ul>
+      </section>
+      <section class="feedback_recibido">
+        <h3>
+          Feedback recibido 💬
+        </h3>
+        <p class="description">
+          Aquí puedes consultar tu feedback recibido
+        </p>
+      </section>
+    </article>
   </main>
 </template>
 
@@ -68,10 +122,6 @@ export default {
       path: "http://localhost:3001/uploads/",
       profile: [],
       file: null,
-      name: null,
-      surname: null,
-      email: null,
-      location: null,
       feedbackSend: [],
       messageError: "Error",
       required: false,
@@ -105,29 +155,14 @@ export default {
 
       let dataEditProfile = new FormData();
 
-      console.log(this.name);
-      console.log(this.surname);
-
       if (this.file !== null) {
         dataEditProfile.append("avatar", this.file);
       }
-      if (this.name !== null) {
-        dataEditProfile.append("name", this.name);
-      }
-      if (this.surname !== null) {
-        dataEditProfile.append("surname", this.surname);
-      }
-      // if (this.email !== null) {
-      //   dataEditProfile.append("email", this.email);
-      // }
-      if (this.location !== null) {
-        dataEditProfile.append("location", this.location);
-      }
 
-      // dataEditProfile.append("name", this.profile.name);
-      // dataEditProfile.append("surname", this.profile.surname);
-      // dataEditProfile.append("email", this.profile.email);
-      // dataEditProfile.append("location", this.profile.location);
+      dataEditProfile.append("name", this.profile.name);
+      dataEditProfile.append("surname", this.profile.surname);
+      dataEditProfile.append("email", this.profile.email);
+      dataEditProfile.append("location", this.profile.location);
 
       axios
         .put("http://localhost:3001/users/" + userID, dataEditProfile)
@@ -245,9 +280,76 @@ export default {
 </script>
 
 <style scoped>
-.avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
+.profile {
+  margin-top: 2rem;
+}
+
+.description {
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+.my_profile {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  gap: 2rem;
+}
+
+.my_profile h3 {
+  margin-bottom: 0.2rem;
+}
+
+.feedback_enviado ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.card_profile {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.input_list {
+  background: transparent;
+  border-radius: 0;
+  border-bottom: 1px solid #505050;
+}
+
+.feedback_enviado ul li {
+  background: #fff;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.card_header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  justify-items: start;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.card_name p {
+  margin-bottom: 0;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.card_body {
+  margin-bottom: 1rem;
+  padding-right: 1rem;
+}
+
+.button_primary {
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
+hr {
+  margin-top: 1.5rem;
 }
 </style>
