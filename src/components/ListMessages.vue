@@ -99,10 +99,15 @@ li {
 
 .card_body {
   margin-bottom: 1.2rem;
+  padding-right: 1rem;
 }
 
 .card_body h3 {
   margin-bottom: 0.2rem;
+}
+
+.card_body img {
+  margin-top: 1rem;
 }
 
 .card_footer {
