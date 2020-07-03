@@ -40,7 +40,7 @@ export function clearLogin() {
   localStorage.removeItem("userID");
   localStorage.removeItem("avatar");
   localStorage.clear();
-  clearAdmin();
+  // clearAdmin();
 }
 
 // ====== Token ======
