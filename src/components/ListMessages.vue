@@ -5,11 +5,7 @@
         <div class="card_image">
           <img
             class="avatar"
-            :src="
-              message.avatar_to.includes('uifaces')
-                ? message.avatar_to
-                : path + message.avatar_to
-            "
+            :src="path + message.avatar_to"
             :alt="message.Para"
           />
         </div>
@@ -24,7 +20,7 @@
             <img
               :src="path + message.image"
               :alt="message.titulo"
-              :class="{ sinImagen: message.image === 'sin imagen' }"
+              :class="{ sinImagen: path + message.image === 'sin imagen' }"
               class="img_feedback"
             />
           </div>
