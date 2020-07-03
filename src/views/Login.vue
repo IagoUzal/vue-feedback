@@ -70,21 +70,28 @@ export default {
   methods: {
     async login() {
       try {
-        await loginUser(this.email, this.password);
-        localStorage.setItem("Usuario", this.email);
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Login Correcto",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        this.$router.push("/");
-        setTimeout(function() {
-          location.reload();
-        }, 1500);
+        if (this.email === "" || this.password === "") {
+          this.errorMessage =
+            "⚠️ El campo email y password no pueden estar vacios";
+          this.required = true;
+        } else {
+          await loginUser(this.email, this.password);
+          localStorage.setItem("Usuario", this.email);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Login Correcto",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.$router.push("/");
+          setTimeout(function() {
+            location.reload();
+          }, 1500);
+          this.required = false;
+        }
       } catch (error) {
-        if (error.response) {
+        if (error) {
           self.errorMessage = localStorage.getItem(errorBack);
           console.log(self.errorMessage);
           self.required = true;
