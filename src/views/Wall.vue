@@ -78,7 +78,9 @@
                   <img
                     :src="path + message.image"
                     :alt="message.titulo"
-                    :class="{ sinImagen: message.image === 'sin imagen' }"
+                    :class="{
+                      sinImagen: path + message.image === 'sin imagen',
+                    }"
                     class="img_feedback"
                   />
                 </div>
@@ -222,13 +224,18 @@ export default {
 <style scoped>
 .container {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
 }
 
 .wall {
   margin: 2rem 0;
 }
+
+.wall_feedback {
+  grid-column: span 2;
+}
+
 h3 {
   margin-bottom: 2rem;
 }
