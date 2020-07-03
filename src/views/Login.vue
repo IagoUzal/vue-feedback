@@ -6,14 +6,7 @@
     />
     <section class="login">
       <section class="login_image">
-        <lottie-player
-          src="https://assets10.lottiefiles.com/private_files/lf30_PZz906.json"
-          background="transparent"
-          speed="1"
-          style="width: 200px; height: 200px;"
-          loop
-          autoplay
-        ></lottie-player>
+        <img src="../assets/image/login.gif" alt="" />
       </section>
       <section class="login_form">
         <h1>
