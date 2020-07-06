@@ -22,13 +22,24 @@
             />
             <label for="file">Cambiar Avatar</label>
           </section>
+          <Label>Nombre: </Label>
           <input class="input_list" type="text" v-model="profile.name" />
           <br />
+          <Label>Apellidos: </Label>
           <input class="input_list" type="text" v-model="profile.surname" />
           <br />
+          <Label>Email: </Label>
           <input class="input_list" type="email" v-model="profile.email" />
           <br />
+          <Label>Ubicación: </Label>
           <input class="input_list" type="text" v-model="profile.location" />
+          <br />
+          <Label>Ocupación: </Label>
+          <input class="input_list" type="text" v-model="profile.job" />
+          <br />
+          <Label>Biografía: </Label>
+          <br />
+          <textarea rows="6" cols="20" v-model="profile.biography" />
           <br />
           <button class="button_primary" @click="editProfile()">
             Actualizar
@@ -99,14 +110,6 @@
           </li>
         </ul>
       </section>
-      <section class="feedback_recibido">
-        <h3>
-          Feedback recibido 💬
-        </h3>
-        <p class="description">
-          Aquí puedes consultar tu feedback recibido
-        </p>
-      </section>
     </article>
   </main>
 </template>
@@ -122,6 +125,7 @@
 */
 import axios from "axios";
 import { clearLogin } from "@/api/utils.js";
+import Swal from "sweetalert2";
 
 export default {
   name: "MyProfile",
@@ -171,17 +175,23 @@ export default {
       dataEditProfile.append("surname", this.profile.surname);
       dataEditProfile.append("email", this.profile.email);
       dataEditProfile.append("location", this.profile.location);
+      dataEditProfile.append("job", this.profile.job);
+      dataEditProfile.append("biography", this.profile.biography);
 
       axios
         .put("http://localhost:3001/users/" + userID, dataEditProfile)
         .then(function(response) {
-          alert(
-            "Usuario modificado correctamente, tienes que volver a iniciar sesión"
-          );
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Usuario actualizado correctamente, vuelve a iniciar sesión",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setTimeout(function() {
+            location.reload();
+          }, 1500);
           self.logoutUser();
-          // setTimeout(function() {
-          //   location.reload();
-          // }, 1500);
         })
         .catch(function(error) {
           if (error.response) {
@@ -194,24 +204,6 @@ export default {
       this.$router.push("/login");
       return clearLogin();
     },
-
-    //   axios
-    //     .put("http://localhost:3001/users/" + userID, {
-    //       avatar: this.file,
-    //       name: this.profile.name,
-    //       surname: this.profile.surname,
-    //       email: this.profile.email,
-    //       location: this.profile.location,
-    //     })
-    //     .then(function(response) {
-    //       alert("Usuario modificado correctamente");
-    //     })
-    //     .catch(function(error) {
-    //       if (error.response) {
-    //         alert(error.response.data.message);
-    //       }
-    //     });
-    // },
 
     // ======= GET, PUT, DELETE, FEEDBACK BY USER ID =======
 
@@ -250,7 +242,13 @@ export default {
             category: this.feedbackSend[index].category,
           })
           .then(function(response) {
-            alert("Feedback modificado correctamente");
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Feedback actualizado correctamente",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             setTimeout(function() {
               location.reload();
             }, 1500);
@@ -268,7 +266,13 @@ export default {
       axios
         .delete(`http://localhost:3001/messages/${dataDelete}`)
         .then(function(response) {
-          alert("Mensaje borrado correctamente");
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Feedback borrado correctamente",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           setTimeout(function() {
             location.reload();
           }, 1500);
@@ -314,7 +318,7 @@ export default {
 
 .feedback_enviado ul {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
 }
 
@@ -325,8 +329,9 @@ export default {
 .input_list {
   background: transparent;
   border-radius: 0;
-  border-bottom: 1px solid #505050;
-  width: 100%;
+  font-family: Muli;
+  font-size: 1rem;
+  padding: 0.2rem 0;
 }
 
 .feedback_enviado ul li {
