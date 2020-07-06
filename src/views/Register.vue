@@ -32,14 +32,14 @@
         <label for="password">Password</label>
         <br />
         <input type="password" id="password" v-model="password" />
-        <br />
+        <!-- <br />
         <label for="location">Selecciona tu Comunidad</label>
         <br />
         <input type="text" id="location" v-model="location" />
         <br />
         <label for="avatar">Selecciona tu imagen de perfil</label>
         <br />
-        <input type="file" id="file" ref="file" @change="onFileChanged" />
+        <input type="file" id="file" ref="file" @change="onFileChanged" /> -->
         <br />
         <button class="button_primary" @click="newUser()">Registrar</button>
         <router-link class="button_text" :to="{ name: 'Login' }"
@@ -52,6 +52,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default {
   name: "Register",
@@ -61,16 +62,13 @@ export default {
       surname: "",
       email: "",
       password: "",
-      location: "",
-      file: null,
+      location: "sin definir",
+      avatar: "avatar.png",
       errorMessage: "Error",
       required: false,
     };
   },
   methods: {
-    onFileChanged() {
-      this.file = this.$refs.file.files[0];
-    },
     newUser() {
       let self = this;
 
@@ -80,15 +78,19 @@ export default {
       dataNewUser.append("email", this.email);
       dataNewUser.append("password", this.password);
       dataNewUser.append("location", this.location);
-      dataNewUser.append("avatar", this.file);
 
       axios
         .post("http://localhost:3001/users", dataNewUser)
         .then(function(response) {
-          alert("Genial estas registrado, revisa tu email y valida tu usuario");
-          setTimeout(function() {
-            location.reload();
-          }, 1500);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title:
+              "Genial estas registrado, revisa tu email y valida tu usuario",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.$router.push("/login");
         })
         .catch(function(error) {
           if (error.response) {
@@ -104,16 +106,23 @@ export default {
 </script>
 
 <style scoped>
+.container_register {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+}
+
 .register_card {
   background: #fff;
   border-radius: 6px;
-  margin: 4rem 0;
-  padding: 2rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 2rem;
+  max-width: 600px;
+  padding: 2rem;
+  gap: 3rem;
   align-items: center;
   justify-items: center;
+  margin: 4rem 0;
 }
 
 .form_card h1 {
@@ -127,7 +136,7 @@ export default {
 }
 
 .img_card img {
-  max-width: 400px;
-  max-height: 400px;
+  max-width: 250px;
+  max-height: 250px;
 }
 </style>
