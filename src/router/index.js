@@ -60,11 +60,16 @@ const routes = [
     },
     beforeEnter: (to, from, next) => {
       if (!to.meta.allowAnonymous && !isLoggedIn()) {
-        alert("Tienes que estar registrado o hacer Login");
+        Swal.fire("Tienes que estar registrado o hacer Login", "warning");
       } else {
         next();
       }
     },
+  },
+  {
+    path: "*",
+    name: "Error",
+    component: Error,
   },
 ];
 
