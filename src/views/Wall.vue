@@ -10,8 +10,13 @@
             <li>
               <span class="color_black">Apellidos:</span> {{ user.surname }}
             </li>
-            <li>
+            <li v-show="user.location !== 'sin definir'">
               <span class="color_black">Localidad:</span> {{ user.location }}
+            </li>
+            <li v-show="user.job !== 'sin definir'"><span class="color_black">Ocupación:</span> {{ user.job }}</li>
+            <li v-show="user.biography !== 'sin definir'">
+              <span class="color_black"><span class="br_space"/>Biografía:</span> <br></span>
+              {{ user.biography }}
             </li>
             <li>
               <span class="color_black">Feedback recibido:</span>
@@ -110,9 +115,9 @@
         </section>
       </section>
       <section class="others">
-        <h3>Otros</h3>
+        <h3>Otros perfiles similares 🙋🏻‍♂️</h3>
         <section class="others_img">
-          <img src="../assets/image/register.gif" alt="" />
+          <listUsers :users="users"></listUsers>
         </section>
       </section>
     </article>
@@ -121,15 +126,20 @@
 
 <script>
 import axios from "axios";
+import api from '@/api/api.js';
 import Swal from "sweetalert2";
+import listUsers from '@/components/ListUsers.vue';
 
 export default {
   name: "Wall",
-  components: {},
+  components: {
+    listUsers,
+  },
   data() {
     return {
       messages: [],
       user: [],
+      users: [],
       path: "http://localhost:3001/uploads/",
       title: "",
       text: "",
@@ -141,6 +151,12 @@ export default {
       errorMessage: "Error",
       required: false,
     };
+  },
+  watch: {
+    "$route.params.id"(val) {
+      this.getMessagesPara();
+      this.getUserInfo()
+    }
   },
   methods: {
     onFileChanged() {
@@ -217,6 +233,10 @@ export default {
   created() {
     this.getMessagesPara();
     this.getUserInfo();
+    // Todos los usuarios
+    api.getUsers().then((res) => {
+      this.users = res.data.data;
+    });
   },
 };
 </script>
@@ -251,7 +271,6 @@ h3 {
 }
 
 .user_info li {
-  border-bottom: 1px solid #505050;
   padding: 0.5rem 0;
   width: 100%;
 }
@@ -332,5 +351,9 @@ h3 {
 .color_black {
   color: #161617;
   font-weight: 600;
+}
+
+.br_space {
+  line-height: 2rem;
 }
 </style>
