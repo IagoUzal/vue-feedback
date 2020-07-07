@@ -367,6 +367,7 @@ textarea {
   padding-left: 0;
   font-size: 1rem;
   color: #505050;
+  width: 100%;
 }
 
 .button_primary {
