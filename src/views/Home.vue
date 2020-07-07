@@ -194,8 +194,12 @@ input {
 .anonimousData {
   margin-top: 2rem;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
+}
+
+.messages {
+  grid-column: span 2;
 }
 
 h3 {
