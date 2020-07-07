@@ -26,7 +26,7 @@
         </section>
       </section>
       <section class="wall_feedback">
-        <section class="send_feedback">
+        <section class="send_feedback" v-show="this.$route.params.id !== this.localUser">
           <h3>Enviar feedback a {{ user.name }} 💬</h3>
           <div class="form">
             <p class="error_message" v-show="required">⚠️ {{ errorMessage }}</p>
@@ -150,12 +150,13 @@ export default {
       totalFeedback: 0,
       errorMessage: "Error",
       required: false,
+      localUser: '',
     };
   },
   watch: {
     "$route.params.id"(val) {
       this.getMessagesPara();
-      this.getUserInfo()
+      this.getUserInfo();
     }
   },
   methods: {
@@ -182,6 +183,7 @@ export default {
     getUserInfo() {
       let self = this;
       let userID = this.$route.params.id;
+      this.localUser = localStorage.getItem('userID')
 
       axios
         .get(`http://localhost:3001/users/${userID}`)
