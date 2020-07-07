@@ -11,7 +11,12 @@
         </div>
         <div class="container_card">
           <div class="card_header">
-            <h3>{{ message.Para }}</h3>
+            <router-link
+              class="card_link"
+              :to="{ name: 'Wall', params: { id: message.to_users_id } }"
+            >
+              <h3>{{ message.Para }}</h3>
+            </router-link>
             <p>Escrito por: {{ message.De }}</p>
           </div>
           <div class="card_body">
@@ -119,5 +124,9 @@ h3 {
 
 .sinImagen {
   display: none;
+}
+
+.card_link {
+  text-decoration: none;
 }
 </style>
